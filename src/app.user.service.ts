@@ -9,10 +9,8 @@ export class AppUserService {
   // @InjectRepository(SCIMUserEntity)
   constructor(private readonly userRepository: UserRepository) {}
 
-  public async createSCIMUser(
-    input: SCIMUserCreateInput,
-  ): Promise<SCIMUserCreateOutput> {
-    const duplicate = await this.checkUserNameExists(input.userName);
+  public createSCIMUser(input: SCIMUserCreateInput): SCIMUserCreateOutput {
+    const duplicate = this.checkUserNameExists(input.userName);
 
     if (duplicate) {
       throw new ConflictException(
@@ -162,10 +160,10 @@ export class AppUserService {
   //   return response;
   // }
 
-  public async checkUserNameExists(userName: string): Promise<boolean> {
-    const user: = await this.userRepository.findOne({
+  public checkUserNameExists(userName: string): boolean {
+    const user: SCIMUserEntity = this.userRepository.findOne({
       where: {
-        userName
+        userName,
       },
     });
     return !!user;

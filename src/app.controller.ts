@@ -30,14 +30,14 @@ export class AppController {
   ) {}
 
   @Post('Users')
-  async createUser(@Body() userDto: SCIMUserCreateInput, @Res() res: Response) {
+  createUser(@Body() userDto: SCIMUserCreateInput, @Res() res: Response) {
     try {
       const userName = userDto.userName;
       if (!userName) {
         throw new BadRequestException('Missing userName.');
       }
       const user: SCIMUserCreateOutput =
-        await this.appUserService.createSCIMUser(userDto);
+        this.appUserService.createSCIMUser(userDto);
       return res.status(201).json(user);
     } catch (error) {
       if (error instanceof ConflictException) {

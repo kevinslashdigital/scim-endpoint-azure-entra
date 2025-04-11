@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AppController } from './app.controller';
 import { AppUserService } from './app.user.service';
+import { UserRepository } from './user.reposiotry';
 import { SCIMUserCreateInput } from './dto/scim.input';
 
 describe('AppController', () => {
@@ -9,14 +10,14 @@ describe('AppController', () => {
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
       controllers: [AppController],
-      providers: [AppUserService],
+      providers: [AppUserService, UserRepository],
     }).compile();
 
     appController = app.get<AppController>(AppController);
   });
 
-  describe('root', () => {
-    it('should return "Hello World!"', async () => {
+  describe('scim user', () => {
+    it('should return "Hello World!"', () => {
       const mockUser: SCIMUserCreateInput = {
         schemas: ['urn:ietf:params:scim:schemas:core:2.0:User'],
         externalId: '456',
@@ -39,7 +40,7 @@ describe('AppController', () => {
         headersSent: false,
         locals: {},
       } as unknown as import('express').Response;
-      const result = await appController.createUser(mockUser, mockResponse);
+      const result = appController.createUser(mockUser, mockResponse);
       console.log(result);
       // expect(result.).toHaveBeenCalledWith(201);
       // expect(mockResponse.json).toHaveBeenCalledWith(expect.any(Object));

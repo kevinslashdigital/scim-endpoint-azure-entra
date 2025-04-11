@@ -1,6 +1,12 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { SCIMUserEntity } from './entity/scim-user.entity';
 
+interface FindOneOption {
+  where: {
+    userName: string;
+  };
+}
+
 @Injectable()
 export class UserRepository {
   private users: SCIMUserEntity[] = [];
@@ -9,10 +15,9 @@ export class UserRepository {
     return user;
   }
 
-  public findOne(option: any): SCIMUserEntity {
-    const user: SCIMUserEntity = this.users.find(
-      (user) => user.userName === option.where.userName,
-    );
+  public findOne(option: FindOneOption): SCIMUserEntity {
+    const { userName } = option.where;
+    const user = this.users.find((user) => user.userName === userName);
     if (!user) {
       throw new NotFoundException(`User with userName ${userName} not found`);
     }
