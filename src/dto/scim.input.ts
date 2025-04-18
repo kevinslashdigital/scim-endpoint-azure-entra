@@ -1,4 +1,14 @@
-import { IsNotEmpty, IsOptional } from 'class-validator';
+import {
+  IsArray,
+  IsBoolean,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
+
+import { Type } from 'class-transformer';
+import { OmitType } from '@nestjs/mapped-types';
 
 import {
   ScimMeta,
@@ -13,62 +23,100 @@ import {
 import { SCIMGroupMember } from '../entity/scim-group.entity';
 
 export class SCIMUserCreateInput {
-  @IsNotEmpty()
-  userName!: string;
-
-  @IsOptional()
-  externalId?: string;
-
-  displayName!: string;
-
-  @IsOptional()
-  nickName?: string;
-
-  @IsOptional()
-  profileUrl?: string;
-
-  @IsOptional()
-  title?: string;
-
-  @IsOptional()
-  userType?: string;
-
-  @IsOptional()
-  preferredLanguage?: string;
-
-  @IsOptional()
-  active?: boolean;
-
-  @IsOptional()
-  emails?: ScimUserEmail[];
-
-  @IsOptional()
-  addresses?: ScimUserAddress[];
-
-  @IsOptional()
-  phoneNumbers?: ScimUserPhoneNumber[];
-
-  @IsOptional()
-  groups?: string[];
-
+  @IsArray()
+  @IsString({ each: true })
   schemas!: string[];
 
   @IsOptional()
+  @IsString()
+  externalId?: string;
+
+  @IsNotEmpty()
+  @IsString()
+  userName!: string;
+
+  @IsOptional()
+  @IsString()
+  displayName?: string;
+
+  @IsOptional()
+  @IsString()
+  nickName?: string;
+
+  @IsOptional()
+  @IsString()
+  profileUrl?: string;
+
+  @IsOptional()
+  @IsString()
+  title?: string;
+
+  @IsOptional()
+  @IsString()
+  userType?: string;
+
+  @IsOptional()
+  @IsString()
+  preferredLanguage?: string;
+
+  @IsOptional()
+  @IsBoolean()
+  active?: boolean;
+
+  @IsOptional()
+  @ValidateNested({ each: true })
+  @Type(() => ScimUserEmail)
+  emails?: ScimUserEmail[];
+
+  @IsOptional()
+  @ValidateNested({ each: true })
+  @Type(() => ScimUserAddress)
+  addresses?: ScimUserAddress[];
+
+  @IsOptional()
+  @ValidateNested({ each: true })
+  @Type(() => ScimUserPhoneNumber)
+  phoneNumbers?: ScimUserPhoneNumber[];
+
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  groups?: string[];
+
+  @IsOptional()
+  @ValidateNested({ each: true })
+  @Type(() => ScimUserRole)
   roles?: ScimUserRole[];
 
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => ScimMeta)
   meta?: ScimMeta;
 
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => ScimUserName)
   name?: ScimUserName;
 
+  @IsOptional()
+  @IsString()
   locale?: string;
 
+  @IsOptional()
+  @IsString()
   timezone?: string;
-  resourceType: string;
+
+  @IsOptional()
+  @IsString()
+  resourceType?: string;
 }
 
 export class SCIMUserUpdatePartialInput {
   @IsOptional()
   Operations?: ScimOperation[];
+
+  @IsOptional()
+  schemas?: string[];
 }
 
 export class SCIMGroupCreateInput {
@@ -76,14 +124,18 @@ export class SCIMGroupCreateInput {
   displayName!: string;
 
   @IsNotEmpty()
-  externalId!: string;
+  @IsOptional()
+  externalId?: string;
 
   @IsOptional()
   members?: SCIMGroupMember[];
 
-  schemas!: string[];
-}
+  @IsOptional()
+  schemas?: string[];
 
+  @IsOptional()
+  meta?: ScimMeta;
+}
 
 export class SearchDto {
   @IsOptional()
@@ -154,4 +206,25 @@ export class SCIMGroupPatchOperation {
     | undefined {
     return this.stringValue ?? this.objectValue ?? this.arrayValue;
   }
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+export class SCIMUserUpdateInput extends OmitType(SCIMUserCreateInput, [
+  'userName',
+  'schemas',
+] as const) {
+  @IsOptional()
+  @IsString()
+  userName?: string;
+
+  @IsOptional()
+  schemas?: string[];
+}
+
+export class SCIMGroupUpdateInput extends OmitType(SCIMGroupCreateInput, [
+  'displayName',
+] as const) {
+  @IsOptional()
+  @IsString()
+  displayName?: string;
 }
