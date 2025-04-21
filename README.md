@@ -101,6 +101,7 @@ Check out a few resources that may come in handy when implementing SCIM endpoint
 - Visit the [Develop and plan provisioning for a SCIM endpoint](https://learn.microsoft.com/en-us/entra/identity/app-provisioning/use-scim-to-provision-users-and-groups#publish-your-application-to-the-aad-application-gallery) to learn more about the tutorial.
 - For SCIM validator, please visit our [SCIM Validator](https://scimvalidator.microsoft.com).
 - To dive deeper and get more hands-on experience, check out our official video [NestJS Documentation](https://courses.nestjs.com/).
+- To test with your local development, check out [Ngrok](https://ngrok.com/docs)
 
 ## Contributing
 
