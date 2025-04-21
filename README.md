@@ -1,26 +1,41 @@
 <p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
+  <p align="center"> <a href="https://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a> </p> <p align="center"> <b>SCIM (System for Cross-domain Identity Management) Implementation Example</b> using NestJS </p> <p align="center"> A ready-to-use, open-source example demonstrating how to implement SCIM 2.0 endpoints, built with the NestJS framework. </p>
 </p>
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+This repository provides a working SCIM 2.0 implementation designed to integrate easily with Azure Entra ID (formerly Azure Active Directory) and other SCIM-compatible identity providers.
+
+We spent significant time learning, troubleshooting, and fine-tuning SCIM integration with Azure Entra ID. To save other developers from going through the same hurdles, we (Kevin and Richie) decided to open-source this project.
+
+Our goal is to make SCIM integrations faster, easier, and more reliable for the next developers.
+
+## Features
+
+✅ SCIM 2.0 compliant endpoints
+
+✅ Support for Azure Entra ID provisioning
+
+✅ User and Group resource handling
+
+✅ Example validation, mapping, and response formatting
+
+✅ Built with NestJS and TypeScript
+
+✅ Structured for easy extension to fit your business rules
+
+## SCIM Endpoints Included
+
+|Method | Endpoint | Description|
+| ----------- | ----------- |----------- |
+|GET | /scim/Users | List or filter users|
+|POST | /scim/Users | Create a new user|
+|PATCH | /scim/Users/:id | Update user attributes|
+|DELETE | /scim/Users/:id | Deactivate or delete user|
+|GET | /scim/Groups | List or filter groups|
+|POST | /scim/Groups | Create a new group|
+|PATCH | /scim/Groups/:id | Update group attributes|
+|DELETE | /scim/Groups/:id | Delete group|
 
 ## Project setup
 
@@ -67,29 +82,36 @@ mau deploy
 
 With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
 
+## Why We Built This
+
+When integrating SCIM with Azure Entra ID, we realized that:
+
+Azure expects very specific SCIM behaviors (especially around PATCH operations, filtering, and soft deletes).
+
+There were not many good open-source examples available.
+
+Common mistakes like wrong schemas, missing attributes, or response format issues could cause silent failures in Entra ID provisioning.
+
+This project is a reference implementation that works out of the box — helping developers skip the trial-and-error phase and focus on their own business logic.
+
 ## Resources
 
-Check out a few resources that may come in handy when working with NestJS:
+Check out a few resources that may come in handy when implementing SCIM endpoint:
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+- Visit the [Develop and plan provisioning for a SCIM endpoint](https://learn.microsoft.com/en-us/entra/identity/app-provisioning/use-scim-to-provision-users-and-groups#publish-your-application-to-the-aad-application-gallery) to learn more about the tutorial.
+- For SCIM validator, please visit our [SCIM Validator](https://scimvalidator.microsoft.com).
+- To dive deeper and get more hands-on experience, check out our official video [NestJS Documentation](https://courses.nestjs.com/).
 
-## Support
+## Contributing
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+Contributions are welcome!
+If you spot issues, want to improve the project, or add support for more identity providers, feel free to open an issue or submit a pull request.
 
 ## Stay in touch
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+- Author - [Kevin](https://www.linkedin.com/in/kevin-slash/)
+- Website - [Slash](https://slash.com/)
 
 ## License
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+This project is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
